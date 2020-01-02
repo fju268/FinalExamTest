@@ -3,6 +3,7 @@ package com.tom.finalexamtest;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,12 +12,10 @@ import android.widget.EditText;
 
 public class MainActivity extends AppCompatActivity {
     private static final int REQUEST_CODE_REGISTER = 110;
-    boolean register = false;
-
     private EditText edusername;
     private EditText edemail;
     private EditText edpassword;
-    int check;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,15 +30,12 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
                 if (requestCode==REQUEST_CODE_REGISTER){
                         if (resultCode==RESULT_OK){
-                            String userid = getSharedPreferences("test", MODE_PRIVATE)
-                                    .getString("name", "");
-                            edusername.setText(userid);
-                            String emailid = getSharedPreferences("test", MODE_PRIVATE)
-                                    .getString("email", "");
-                            edemail.setText(emailid);
-                            String passwordid = getSharedPreferences("test", MODE_PRIVATE)
-                                    .getString("password", "");
-                            edpassword.setText(passwordid);
+                            edusername.setText(getSharedPreferences("test", MODE_PRIVATE)
+                                    .getString("name", ""));
+                            edemail.setText(getSharedPreferences("test", MODE_PRIVATE)
+                                    .getString("email", ""));
+                            edpassword.setText( getSharedPreferences("test", MODE_PRIVATE)
+                                    .getString("password", ""));
                         }
                 }
     }
@@ -51,9 +47,14 @@ public class MainActivity extends AppCompatActivity {
         if (sting_username.equals("")&&sting_email.equals("")&&sting_password.equals("")){
             Intent intent = new Intent(MainActivity.this,UsernameActivity.class);
             startActivityForResult(intent,REQUEST_CODE_REGISTER);
+        }else if(sting_username.equals("")||sting_email.equals("")||sting_password.equals("")){
 
         }else{
-
+            new AlertDialog.Builder(MainActivity.this)
+                    .setTitle("註冊成功")
+                    .setMessage("恭喜成為丁級英文的會員")
+                    .setPositiveButton("OK",null)
+                    .show();
         }
     }
 }

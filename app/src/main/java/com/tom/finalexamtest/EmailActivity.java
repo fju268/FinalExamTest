@@ -1,5 +1,6 @@
 package com.tom.finalexamtest;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -17,17 +18,27 @@ public class EmailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_email);
+
     }
     public void topassword(View view){
         edemail = findViewById(R.id.wemail);
-        String email = edemail.getText().toString();
-        SharedPreferences pref = getSharedPreferences("test",MODE_PRIVATE);
-        pref.edit()
-                .putString("email",email)
-                .commit();
-        Log.d("12", "topassword: "+pref);
-        Intent intent = new Intent(EmailActivity.this,PasswordActivity.class);
-        intent.putExtra("check",getIntent());
-        startActivity(intent);
+        String email1 = edemail.getText().toString();
+        if (email1.equals("")){
+            new AlertDialog.Builder(EmailActivity.this)
+                    .setTitle("衝三小")
+                    .setMessage("媽媽勒不會打字是否")
+                    .setPositiveButton("Fuck",null)
+                    .show();
+        }else {
+            String email = edemail.getText().toString();
+            SharedPreferences pref = getSharedPreferences("test", MODE_PRIVATE);
+            pref.edit()
+                    .putString("email", email)
+                    .commit();
+            Log.d("12", "topassword: " + pref);
+            Intent intent = new Intent(EmailActivity.this, PasswordActivity.class);
+            startActivity(intent);
+            finish();
+        }
     }
 }
